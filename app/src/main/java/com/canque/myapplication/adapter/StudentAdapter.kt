@@ -20,8 +20,8 @@ class StudentAdapter(
         private val binding: ItemStudentBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(student: Student) {
-            binding.fNameTextView.text = student.fName
-            binding.lNameTextView.text = student.lName
+            binding.studentNameTextView.text = student.fName + " " + student.lName
+            binding.studentIdTextView.text = "ID: " + student.id.toString()
             binding.row.setOnClickListener {
 
                 // Declaring Intent.

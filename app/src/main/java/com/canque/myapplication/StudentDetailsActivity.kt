@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.canque.myapplication.constants.Constants
 import com.canque.myapplication.databinding.ActivityStudentDetailsBinding
+import androidx.activity.enableEdgeToEdge
 
 class StudentDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStudentDetailsBinding
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityStudentDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
