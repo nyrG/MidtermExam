@@ -10,32 +10,30 @@ import androidx.activity.enableEdgeToEdge
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.canque.myapplication.database.AppDatabase
-import com.canque.myapplication.database.StudentRepository
+import androidx.lifecycle.ViewModelProvider
+import com.canque.myapplication.database.StudentViewModel
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private lateinit var mStudentViewModel: StudentViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val db = AppDatabase.getInstance(this)
-        val studentDao = db.studentDao()
+        val students: MutableList<Student> = ArrayList()
+        mStudentViewModel = ViewModelProvider(this).get(StudentViewModel::class.java)
 
-        val studentRepository = StudentRepository(studentDao)
-
-        val student = Student(
+        val student = Student( 0,
             fName ="Stacy",
             lName = "Wallace",
             photoId = R.mipmap.student_1,
             phoneNum = "1234567890")
 
-        studentRepository.insertStudent(student)
+        mStudentViewModel.addStudent(student)
 
-        val students = studentRepository.getAllStudents()
 
         /*students.add(Student(1 , "John", "Doe", 1, "09616497885"))
         students.add(Student(2 , "Saturo", "Gojo", 2, "09616497885"))
@@ -53,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.studentList.layoutManager = LinearLayoutManager(this)
         binding.studentList.adapter = StudentAdapter(
             this, // Adding this parameter since we need the context of the current screen.
-            students.toMutableList()
+            students
         )
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.addStudent) { v, windowInsets ->
@@ -111,5 +109,9 @@ class MainActivity : AppCompatActivity() {
             // down to descendant views.
             WindowInsetsCompat.CONSUMED
         }
+    }
+
+    private fun insertDataToDatabase() {
+
     }
 }

@@ -1,18 +1,12 @@
 package com.canque.myapplication.database
 
-import com.canque.myapplication.dao_interfaces.StudentDao
+import androidx.lifecycle.LiveData
 import com.canque.myapplication.models.Student
 
 class StudentRepository(private val studentDao: StudentDao) {
-    fun insertStudent(student: Student) {
-        val lastId = studentDao.getLastStudentId() ?: 0
-        val nextId = lastId + 1
-        val newStudent = student.copy(id = nextId)
-        studentDao.insert(newStudent)
-    }
-
-    fun getAllStudents(): List<Student> {
-        return studentDao.getAll()
+    val readAllData: LiveData<List<Student>> = studentDao.readAllData()
+    suspend fun addStudent(student: Student) {
+        studentDao.addStudent(student)
     }
 
     // Other repository methods for updating, deleting, or querying data
